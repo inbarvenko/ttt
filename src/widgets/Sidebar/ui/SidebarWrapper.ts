@@ -37,6 +37,7 @@ const SidebarWrapper = styled.div.withConfig({
     }
 
     padding: 20px 0;
+    cursor: pointer;
   }
 
   .arrowButton {

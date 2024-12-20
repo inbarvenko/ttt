@@ -45,3 +45,14 @@
 }
 
 /* Конец стилей для скроллбара */
+
+.ant-tour-header,
+.ant-tour-description,
+.ant-tour,
+span {
+  font-family: "HeliosCondC" !important;
+}
+
+p {
+  margin: 0;
+}

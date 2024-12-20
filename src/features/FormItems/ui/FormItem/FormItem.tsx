@@ -25,6 +25,7 @@ const FormItem: React.FC<Props> = ({
             flexDirection: "row",
             gap: 2,
             marginRight: 10,
+            fontFamily: "HeliosCondC",
           }}
           flex={2}
           span={5}
@@ -33,7 +34,7 @@ const FormItem: React.FC<Props> = ({
           {tooltip && <Tooltip title={tooltip} />}
         </Col>
         <Col className="input-text" flex={3}>
-          <Form.Item className="form-item" name="KP_code" {...formItemProps}>
+          <Form.Item className="form-item" {...formItemProps}>
             {children}
           </Form.Item>
         </Col>

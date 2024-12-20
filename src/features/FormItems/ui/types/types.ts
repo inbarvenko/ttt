@@ -32,7 +32,7 @@ export type CheckListType = {
   CHL_status: string;
   CHL_filial: string;
   CHL_responsibleDepartment?: string;
-  CHL_controlObject: string;
+  // CHL_controlObject: string;
   CHL_createDate: Date;
   CHL_editDate: Date;
   CHL_executor: string;

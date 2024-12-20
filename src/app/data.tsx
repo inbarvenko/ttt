@@ -1,23 +1,29 @@
 import {
   BiFileBlank,
   BiFolder,
-  BiGitRepoForked,
   BiHelpCircle,
   BiHomeAlt2,
 } from "react-icons/bi";
 
 import { SiderItemType } from "../widgets/Sidebar/types/types";
-import NewChecklistPage from "../pages/CheckList/NewChecklistPage/NewChecklistPage";
 import PersonChecklistsPage from "../pages/CheckList/PersonChecklistsPage/PersonChecklistsPage";
 import TableCPPage from "../pages/TablesPages/TableCPPage";
 import EmptyPage from "../pages/Program/EmptyPage/EmptyPage";
 import HelpPage from "../pages/Program/HelpPage/HelpPage";
 import AddKPPage from "../pages/CheckList/AddKPPage/AddKPPage";
+import HomePage from "../pages/HomePage/HomePage";
+import OneChecklistPage from "../pages/CheckList/OneChecklistPage/OneChecklistPage";
 
 export const routersData: SiderItemType[] = [
   {
-    label: "Статистика выполнения КП",
+    label: "Главная страница",
     path: "/",
+    icon: <BiHomeAlt2 size={20} />,
+    element: <HomePage />,
+  },
+  {
+    label: "Статистика выполнения КП",
+    path: "/statistic",
     icon: <BiHomeAlt2 size={20} />,
     element: <EmptyPage />,
   },
@@ -36,7 +42,7 @@ export const routersData: SiderItemType[] = [
           {
             label: "Новый чек-лист",
             path: "/checklist",
-            element: <NewChecklistPage />,
+            element: <OneChecklistPage />,
             children: [
               {
                 label: "Форма добавления КП",
@@ -63,12 +69,6 @@ export const routersData: SiderItemType[] = [
         element: <EmptyPage />,
       },
     ],
-  },
-  {
-    label: "Журналы",
-    path: "/journals",
-    icon: <BiGitRepoForked size={20} />,
-    element: <EmptyPage />,
   },
   {
     label: "Справочники",
@@ -110,7 +110,7 @@ export const executorRoutersData: SiderItemType[] = [
     label: "Главная страница",
     path: "/",
     icon: <BiHomeAlt2 size={20} />,
-    element: <EmptyPage />,
+    element: <HomePage />,
   },
   {
     label: "Чек-листы",
@@ -122,12 +122,12 @@ export const executorRoutersData: SiderItemType[] = [
       {
         label: "Новый чек-лист",
         path: "/checklist",
-        element: <NewChecklistPage />,
+        element: <OneChecklistPage />,
         children: [
           {
             label: "Форма добавления КП",
             path: "/new-KP",
-            element: <NewChecklistPage />,
+            element: <AddKPPage />,
           },
         ],
       },

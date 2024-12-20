@@ -12,9 +12,9 @@ const PersonChecklistsPageWrapper = styled.div`
   .table-header {
     display: flex;
     align-items: center;
-    justify-content: space-between;
-    width: 100%;
-    margin: 0 15px;
+    justify-content: flex-end;
+    margin: 20px 15px;
+    gap: 15px;
 
     &-button {
       background-color: ${colors["light"].color_bright_blue_50};

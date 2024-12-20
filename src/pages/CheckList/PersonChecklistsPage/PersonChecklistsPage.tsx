@@ -7,15 +7,22 @@ import Layout from "../../../shared/ui/Layout/Layout";
 import { tableData } from "./table.data";
 import PersonChecklistsPageWrapper from "./PersonChecklistsPageWrapper";
 import { Table } from "../../../widgets/Table";
-import { ColDef } from "ag-grid-enterprise";
+import {
+  ColDef,
+  ITooltipParams,
+  RowDoubleClickedEvent,
+} from "ag-grid-enterprise";
 import { StatusCellRenderer } from "../../../shared/lib/ag-grid/ui/StatusCellRender/StatusCellRender";
 import { SizeColumnsToFitGridStrategy } from "@ag-grid-community/core";
 import { Button } from "../../../shared/ui/Button/Button";
 import { useNavigate } from "react-router-dom";
 import { DateCellRenderer } from "../../../shared/lib/ag-grid/ui/DateCellRenderer/DateCellRender";
+import { UserContext } from "../../../shared/model/UserContext";
+import UserTooltip from "../../../shared/ui/UserTooltip/UserTooltip";
 
 const PersonChecklistsPage: React.FC = () => {
   const navigate = useNavigate();
+  const user = React.useContext(UserContext);
 
   const colDefsData = useMemo<ColDef[]>(
     () => [
@@ -52,9 +59,18 @@ const PersonChecklistsPage: React.FC = () => {
         field: "CHL_responsibleDepartment",
       },
       {
-        headerName: "Объект выполнения КП",
-        field: "CHL_controlObject",
+        headerName: "Исполнитель",
+        field: "CHL_executor",
+        tooltipValueGetter: (p: ITooltipParams) => {
+          return p.value;
+        },
+        tooltipComponentParams: { value: (params: any) => params.value },
+        tooltipComponent: UserTooltip,
       },
+      // {
+      //   headerName: "Объект выполнения КП",
+      //   field: "CHL_controlObject",
+      // },
       {
         headerName: "Дата создания",
         field: "CHL_createDate",
@@ -72,10 +88,6 @@ const PersonChecklistsPage: React.FC = () => {
 
         // cellEditor: "agDateCellEditor",
       },
-      {
-        headerName: "Исполнитель",
-        field: "CHL_executor",
-      },
     ],
     [],
   );
@@ -91,12 +103,17 @@ const PersonChecklistsPage: React.FC = () => {
         },
         {
           colId: "CHL_executor",
-          minWidth: 250,
+          minWidth: 220,
         },
       ],
     }),
     [],
   );
+
+  const navigateCheckList = (e: RowDoubleClickedEvent<any, any>) => {
+    const id = (e.data.CHL_id as string).slice(1);
+    navigate(`checklist?id=${id}`, { relative: "path" });
+  };
 
   return (
     <PersonChecklistsPageWrapper>
@@ -106,6 +123,13 @@ const PersonChecklistsPage: React.FC = () => {
         bodyClassName="body-style"
       >
         <div className="table-header">
+          {user.role === 2 && (
+            <Button
+              title="Мои чек-листы"
+              className="table-header-button"
+              onClick={() => console.log("filter mine")}
+            />
+          )}
           <Button
             title="Создать новый чек-лист"
             className="table-header-button"
@@ -113,9 +137,11 @@ const PersonChecklistsPage: React.FC = () => {
           />
         </div>
         <Table
+          // enableBrowserTooltips
           data={tableData}
           columnDefs={colDefsData}
           autoSizeStrategy={autoSize}
+          onRowDoubleClicked={navigateCheckList}
         />
       </Layout>
     </PersonChecklistsPageWrapper>

@@ -98,6 +98,10 @@ const Table: React.FC<Props> = ({ data, columnDefs, ...props }: Props) => {
       <AgGridReact
         pagination
         enableCharts
+        tooltipInteraction
+        tooltipTrigger="hover"
+        tooltipShowDelay={500}
+        tooltipHideDelay={10000}
         className="ag-theme-quartz"
         containerStyle={{ height: "auto", width: "100%" }}
         suppressClickEdit={props.editing}

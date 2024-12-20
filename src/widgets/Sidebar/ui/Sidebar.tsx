@@ -6,7 +6,7 @@ import React, {
   useRef,
   useState,
 } from "react";
-import Logo from "../../../shared/assets/svg/head-novator.svg";
+import Logo from "../../../shared/assets/svg/LogoKP.svg";
 import { executorRoutersData, routersData } from "../../../app/data";
 import { useLocation, useNavigate } from "react-router-dom";
 import { BiChevronsRight, BiUser } from "react-icons/bi";
@@ -14,14 +14,37 @@ import { SiderItemType } from "../types/types";
 import SidebarWrapper from "./SidebarWrapper";
 import { ThemeEnum } from "../../../shared/constants/theme";
 import { UserContext } from "../../../shared/model/UserContext";
+import { TourStepProps } from "antd";
 
-const Sidebar: React.FC = () => {
+type Props = {
+  setSteps: (object: TourStepProps[]) => void;
+};
+
+const Sidebar: React.FC<Props> = ({ setSteps }: Props) => {
   const user = useContext(UserContext);
   const [minimize, setMinimize] = useState<boolean>(false);
   const [openSubmenus, setOpenSubmenus] = useState<string[]>([]);
-  const buttonRef = useRef<HTMLDivElement | null>(null);
   const navigate = useNavigate();
   const localion = useLocation();
+
+  const profileRef = useRef<HTMLDivElement | null>(null);
+  const buttonRef = useRef<HTMLDivElement | null>(null);
+
+  useEffect(() => {
+    console.log("sidebartour", buttonRef.current);
+    setSteps([
+      {
+        title: "Боковое меню",
+        description: "Основная навигация по приложению",
+        target: buttonRef.current,
+      },
+      {
+        title: "Личный кабинет",
+        description: "При нажатии открывается личный кабинет",
+        target: profileRef.current,
+      },
+    ]);
+  }, [setSteps]);
 
   const openLocationSubmenus = useCallback(() => {
     let previousPath = "";
@@ -168,7 +191,7 @@ const Sidebar: React.FC = () => {
       themelocal={ThemeEnum.light}
     >
       <div className="content">
-        <img src={Logo} className="logo" />
+        <img onClick={() => navigate("/")} src={Logo} className="logo" />
 
         <ul className="sidebar">{renderItems(data)}</ul>
       </div>
@@ -180,7 +203,7 @@ const Sidebar: React.FC = () => {
           onClick={toggleMenu}
         />
 
-        <div className="user" onClick={onProfileClick}>
+        <div ref={profileRef} className="user" onClick={onProfileClick}>
           <BiUser className="user-icon" size={25} />
 
           {!minimize && (

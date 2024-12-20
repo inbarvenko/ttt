@@ -27,17 +27,19 @@ const Layout: React.FC<Props> = ({
       <title>{title}</title>
     </Helmet>
     <div className="layout">
-      <div className={`${headerClassName} header`}>
-        <p className="header-text">{title}</p>
-        {settings && (
-          <BiCog
-            color={colors["light"].color_main_grey_50}
-            size={25}
-            className="header-settings"
-            onClick={onSettingsClick}
-          />
-        )}
-      </div>
+      {title && (
+        <div className={`${headerClassName} header`}>
+          <p className="header-text">{title}</p>
+          {settings && (
+            <BiCog
+              color={colors["light"].color_main_grey_50}
+              size={25}
+              className="header-settings"
+              onClick={onSettingsClick}
+            />
+          )}
+        </div>
+      )}
       <div className={` content ${bodyClassName}`}>{children}</div>
     </div>
   </LayoutWrapper>
